@@ -1,0 +1,13 @@
+{
+  "name": "hono-project",
+  "scripts": {
+    "dev": "bun run --hot src/index.ts"
+  },
+  "dependencies": {
+    "hono": "^4.12.15",
+    "uuid": "^14.0.0"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  }
+}
