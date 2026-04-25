@@ -1,7 +1,7 @@
 {
   "name": "hono-project",
   "scripts": {
-    "dev": "bun run --hot src/index.ts"
+    "dev": "bun run --hot src/learn.js"
   },
   "dependencies": {
     "hono": "^4.12.15",
