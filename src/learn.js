@@ -79,7 +79,7 @@ app.delete('/video/:id', (c) => {
 
 })
 
-app.delete('videos', (c) => {
+app.delete('/videos', (c) => {
   videos = []
   return c.json({
     message: "All videos deleted successfully",
