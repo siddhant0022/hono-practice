@@ -3,6 +3,7 @@ import { poweredBy } from 'hono/powered-by'
 import { logger } from 'hono/logger'
 import dbConnect from './db/connect'
 import FavYoutubeModel from './db/fav-youtube-models'
+import { isValidObjectId } from 'mongoose'
 
 const app = new Hono()
 
@@ -32,6 +33,25 @@ dbConnect()
       return c.text(`Error creating document: $(err.message)`, 500)
     }
   })
+
+app.get('/:documentId', async(c) => {
+  const id = c.req.param('documentId')
+  if(!isValidObjectId(id)){
+    return c.json(({error: "Invalid document ID"}), 400)
+  }
+  try{
+  const document = await FavYoutubeModel.findById(id)
+  if(!document){
+    return c.json({error: "Document not found"}, 404)
+  }
+  return c.json(document.toObject(), 200)
+  }catch(err){
+  return c.text(`Error fetching document: $(err.message)`, 500)
+  }
+
+  })
+
+  
 })
 .catch((err) => {
   app.get('/*', (c) => {
@@ -45,8 +65,6 @@ app.onError((err, c) => {
   return c.text(`App Error: ${err.message}`)
 })
 
-app.get('/', (c) => {
-  return c.text('Hello Hono!')
-})
+
 
 export default app
